@@ -173,9 +173,9 @@ if(interactive()){
       if(is.null(inFile)) return(NULL)
       data_user <- read.csv(inFile$datapath, header = TRUE)
       
-      data_user <- data_user[,-19]
       data_user <- data_user[,-18]
-      data_user <- data_user[,-1]
+      data_user <- data_user[,-17]
+      #data_user <- data_user[,-1]
       colnames(data_user) <- c("Query","Contig","Identity","Alignment length","Mismatches","Gaps",
                                "Query start","Query end","Subject start","Subject end",
                                "Genomic start","Genomic end","E value","Bit score",

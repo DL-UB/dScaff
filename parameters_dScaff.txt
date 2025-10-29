@@ -1,6 +1,6 @@
 Adjust the value of parameters:
 minimum_distance_between_queries = 1
-minimum_queries_length = 2500
+minimum_queries_length = 500
 first_blast_alignment_threshold = 0,5
 second_blast_alignment_threshold = 0,4
 third_blast_alignment_threshold = 0,3

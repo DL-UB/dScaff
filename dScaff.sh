@@ -249,7 +249,7 @@ do
 ((current_file++))
 percent=$(( 100 * current_file / file_count ))
 
-blastn -db $CWD/assembly_database/*.fasta -query $i -out ${i%.query.fasta}".lucru.csv" -outfmt 6 -num_threads $threads
+blastn -db $CWD/assembly_database/*.fasta -query $i -out ${i%.query.fasta}".lucru.csv" -outfmt 6 -num_threads $threads 2> /dev/null &
 
 # build progress bar
     progress_bar=""
@@ -268,7 +268,6 @@ for i in queries/*.query.fasta; do lung=$( echo $i | sed -e '1d' $i | wc -c ); l
 
 
 rm -r queries/*.query.fasta queries/*.lucru.csv
-#rm -r queries
 
 cd $CWD/$subdir
 rm headers_list_db.txt
@@ -302,14 +301,26 @@ find . -name '*' -size 0 -print0 | xargs -0 rm 2> /dev/null
 done
 
 cd $CWD
+cp contigs_indexing.py $subdir
 cp contigs_mapping.R $subdir
 cp parameters_dScaff.txt $subdir
 mv lungimi_contiguri.csv $subdir 
 cd $subdir
 
-Rscript contigs_mapping.R 2> /dev/null &
+echo "Indexing ... "
+#Rscript contigs_mapping.R 2> /dev/null &
+python3 contigs_indexing.py 2> /dev/null &
 spinner $!
 #echo "Done!"
+
+cd $CWD/$subdir
+echo ""
+echo "Mapping ... "
+Rscript contigs_mapping.R 2> /dev/null &
+spinner $!
+echo "Done!"
+echo ""
+
 rm parameters_dScaff.txt
 rm lungimi_contiguri.csv
 
@@ -327,6 +338,8 @@ mkdir tmp
 mv *.csv tmp
 mv *.txt tmp
 mv *.fasta tmp
+
+rm -r queries
 
 #######################################
 	if [ -d "chromosome" ]; then
@@ -441,6 +454,7 @@ find . -type f -name *_dScaff_assembly.fasta -exec cat > dScaff.fasta {} +
 done
 
 rm query_filtering.R
+rm contigs_indexing.py
 rm contigs_mapping.R
 rm chromosomes.txt
 rm *.tsv
@@ -450,7 +464,7 @@ cd $CWD
 rm -r assembly_database
 rm headers_assembly.txt
 
-find . -name queries -type d -exec rm -rf {} +
+#find . -name queries -type d -exec rm -rf {} +
 
 
 echo " "

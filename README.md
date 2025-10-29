@@ -38,6 +38,11 @@ It is recommended to use the absolute paths for each file. The script will only 
 
 #
 #
+### Post run editing:
+
+The output graphs and tables can be modified after running the main **dScaff** script. The modifications can be made through the R shiny tool *app_dScaff.R* after installing all the necessary R packages. The app takes the *contigs_of_interest.csv* file found in the *tmp* folder of each chromosome/scaffold. The graphs and tables can be adjusted by changing the parameters within the modern graphical interface.
+#
+#
 ### Contact and feedback:
 
 For offering feedback or any type of inquires about the application, please contact us at **a.ionascu20@s.bio.unibuc.com** or **laboratordrosophila@gmail.com**.  

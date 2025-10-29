@@ -40,7 +40,7 @@ It is recommended to use the absolute paths for each file. The script will only 
 #
 ### Contact and feedback:
 
-For offering feedback or any type of inquires about the application, please contact us at **a.ionascu20@s.bio.unibuc.com**.  
+For offering feedback or any type of inquires about the application, please contact us at **a.ionascu20@s.bio.unibuc.com** or **laboratordrosophila@gmail.com**.  
 
 
 </div>

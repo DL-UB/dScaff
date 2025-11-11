@@ -21,8 +21,8 @@ get_help() {
   echo "  -d, --dataset			ncbi_dataset.tsv containing all genes in reference genome or coordinates_dataset.csv output of ranked queries SubSequencesExtractor.sh script"
   echo " "
   echo "Strategy:"
-  echo "  -gq, --gene_queries		Perform gene queries strategy"
-  echo "  -rq, --ranked_queries		Perform ranked queries strategy"
+  echo "  -gq, --gene-queries		Perform gene queries strategy"
+  echo "  -rq, --ranked-queries		Perform ranked queries strategy"
   echo " "
   echo "Options:"
   echo "  -kb, --keep-blast 		Keep BLAST results in directory (may result in large directory sizes)"
@@ -89,15 +89,15 @@ while [ ! -z "$1" ]; do
             exit 1
          fi         
         ;;
-     --gene_queries|-gq)
+     --gene-queries|-gq)
          echo " "
          echo "Gene queries strategy selected."
-         strategy="gene_queries"
+         strategy="gene-queries"
          ;;
-     --ranked_queries|-rq)
+     --ranked-queries|-rq)
          echo " "
          echo "Ranked queries strategy selected."
-         strategy="ranked_queries"
+         strategy="ranked-queries"
          ;;
      --keep-blast|-kb)
          echo " "
@@ -363,7 +363,7 @@ cleanup_queries
 #######################################
 	if [ -d "chromosome" ]; then
 	cd chromosome/
-	if [ $strategy == "gene_queries" ]; then
+	if [ $strategy == "gene-queries" ]; then
 	rm *orientation.csv
 	fi
 ##################################################################################################################
@@ -411,7 +411,7 @@ cleanup_queries
 		ls -d ./*/ | while read scaff 1> /dev/null
 		do
 		cd $scaff
-		if [ $strategy == "gene_queries" ]; then
+		if [ $strategy == "gene-queries" ]; then
 		rm *orientation.csv
 		fi 
 

@@ -15,10 +15,10 @@ Digital Scaffolding (**dScaff**) aims improve new draft assemblies of organisms 
 **dScaff** was implemented for use on Debian-based systems. Before running the main script:
 
 + Download the files in this repository.
-+ Run the requirements.sh script in order to download R, seqtk and ncbi-blast+ packages. 
++ Run the requirements.sh script in order to install R, python3, seqtk and ncbi-blast+ packages. 
 + Open a bash terminal, enter R environment with the *R* command. Inside the R environment run the *install.packages("dplyr")* command and type *yes* for each threshold. This step was required during testing on a Linux Mint 21.3 system, for locally installing R packages. Other operating systems might not require this step.
-+ Make sure the main script is executable.
-+ Keep the *dScaff.sh* , *query_filtering.R* and *contigs_mapping.R* files in the same directory.
++ Make sure the *dScaff.sh* and *contigs_indexing.py* scripts are executable.
++ Keep the *dScaff.sh* , *query_filtering.R* , *contigs_mapping.R* and *contigs_indexing.py* files in the same directory.
 
 #
 #
@@ -26,21 +26,31 @@ Digital Scaffolding (**dScaff**) aims improve new draft assemblies of organisms 
 
 Information about **dScaff** can be obtained by running the script with the *-h* or *--help* command. The script should be run from its main directory with either *bash* , *sh* or *./* prefixes. 
 
-**dScaff** takes as arguments:  
--a, --assembly            Draft assembly in FASTA format\
--q, --query               gene.fna file with gene sequences from reference genome or ranked queries.fasta output of ranked queries [SubSequencesExtractor.sh script](https://github.com/DL-UB/SubSequencesExtractor)\
--d, --dataset             ncbi_dataset.tsv containing all genes in reference genome\
--gq, --gene_queries       perform gene queries strategy\
--rq, --ranked_queries     perform ranked queries strategy
+Arguments:\
+-a, --assembly = draft assembly in FASTA format\
+-q, --query = gene.fna file with gene sequences from reference genome or ranked queries.fasta output of ranked queries [SubSequencesExtractor.sh script](https://github.com/DL-UB/SubSequencesExtractor)\
+-d, --dataset = ncbi_dataset.tsv containing all genes in reference genome
+
+Stategies:\
+-gq, --gene_queries = perform gene queries strategy\
+-rq, --ranked_queries = perform ranked queries strategy
+
+Options:\
+-kb, --keep-blast = keep BLAST results in directory (may result in large directory sizes)
 
 
 It is recommended to use the absolute paths for each file. The script will only work if all four arguments are provided. The file names should not contain dots in the name.
 
 #
 #
+### Post run editing:
+
+The output graphs and tables can be modified after running the main **dScaff** script. The modifications can be made through the R shiny tool *app_dScaff.R* after installing all the necessary R packages. The app takes the *contigs_of_interest.csv* file found in the *tmp* folder of each chromosome/scaffold. The graphs and tables can be adjusted by changing the parameters within the modern graphical interface.
+#
+#
 ### Contact and feedback:
 
-For offering feedback or any type of inquires about the application, please contact us at **a.ionascu20@s.bio.unibuc.com**.  
+For offering feedback or any type of inquires about the application, please contact us at **a.ionascu20@s.bio.unibuc.com** or **laboratordrosophila@gmail.com**.  
 
 
 </div>

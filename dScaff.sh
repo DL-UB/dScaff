@@ -12,15 +12,20 @@
 # Define the help method
 get_help() {
   echo " "
-  echo "Usage: $(basename $0) [-h] [-a FILE] [-q FILE] [-d FILE] [OPTION]"
+  echo "Usage: $(basename $0) [-h] [-a FILE] [-q FILE] [-d FILE] [STRATEGY] [OPTIONS]"
   echo " "
-  echo "Options:"
+  echo "Arguments:"
   echo "  -h, --help			Display this help message"
   echo "  -a, --assembly		Draft assembly in FASTA format"
   echo "  -q, --query			gene.fna file with gene sequences from reference genome or ranked_queries.fasta output of ranked queries SubSequencesExtractor.sh script"
   echo "  -d, --dataset			ncbi_dataset.tsv containing all genes in reference genome or coordinates_dataset.csv output of ranked queries SubSequencesExtractor.sh script"
+  echo " "
+  echo "Strategy:"
   echo "  -gq, --gene_queries		Perform gene queries strategy"
   echo "  -rq, --ranked_queries		Perform ranked queries strategy"
+  echo " "
+  echo "Options:"
+  echo "  -kb, --keep-blast 		Keep BLAST results in directory (may result in large directory sizes)"
   echo " "
   echo "Use files from working directory or provide absolute path to input files."
   echo " "
@@ -44,6 +49,7 @@ assembly=""
 query=""
 dataset=""
 strategy=""
+keep_blast="false"
 
 while [ ! -z "$1" ]; do
   case "$1" in
@@ -93,6 +99,11 @@ while [ ! -z "$1" ]; do
          echo "Ranked queries strategy selected."
          strategy="ranked_queries"
          ;;
+     --keep-blast|-kb)
+         echo " "
+         echo "Option set: will keep BLAST intermediate results ('queries/' directory will NOT be removed)."
+         keep_blast="true"
+         ;;
      *)
         get_help
         ;;
@@ -128,7 +139,14 @@ if [ -z "$strategy" ]; then
     exit 1
 fi
 
-
+cleanup_queries() {
+  if [ "$keep_blast" = "true" ]; then
+    echo "Keeping BLAST results in 'queries/' directory."
+  else
+    echo "Removing 'queries/' directory (use -kb/--keep-blast to keep all BLAST results)."
+    rm -r queries 2>/dev/null || true
+  fi
+}
 
 START=$(date +%s)
 
@@ -339,7 +357,8 @@ mv *.csv tmp
 mv *.txt tmp
 mv *.fasta tmp
 
-rm -r queries
+cleanup_queries
+#rm -r queries
 
 #######################################
 	if [ -d "chromosome" ]; then
@@ -473,18 +492,25 @@ echo "Finished !"
 echo " "
 END=$(date +%s)
 seconds=$(( $END - $START ))
-minutes=$(echo "scale=1; $seconds / 60" | bc)
-hours=$(echo "scale=1; $seconds / 3600" | bc)
 
-if [[ $seconds -ge 3600 ]] 
-then
-echo "dScaff ran for $hours hours (that's $minutes minutes or $seconds seconds)."
-elif [[ $seconds -ge 60 ]]
-then
-echo "dScaff ran for $minutes minutes (that's $seconds seconds)."
-else
-echo "dScaff ran for $seconds seconds."
+days=$(( seconds / 86400 ))
+hours=$(( (seconds % 86400) / 3600 ))
+minutes=$(( (seconds % 3600) / 60 ))
+secs=$(( seconds % 60 ))
+
+runtime=""
+if [[ $days -gt 0 ]]; then
+    runtime="${runtime}${days}d "
 fi
+if [[ $hours -gt 0 ]]; then
+    runtime="${runtime}${hours}h "
+fi
+if [[ $minutes -gt 0 ]]; then
+    runtime="${runtime}${minutes}m "
+fi
+runtime="${runtime}${secs}s"
+
+echo "dScaff ran for $runtime."
 
 echo " "
 

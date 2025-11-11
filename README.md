@@ -27,16 +27,16 @@ Digital Scaffolding (**dScaff**) aims improve new draft assemblies of organisms 
 Information about **dScaff** can be obtained by running the script with the *-h* or *--help* command. The script should be run from its main directory with either *bash* , *sh* or *./* prefixes. 
 
 **dScaff** takes as arguments:\
--a, --assembly     =       draft assembly in FASTA format\
--q, --query        =       gene.fna file with gene sequences from reference genome or ranked queries.fasta output of ranked queries [SubSequencesExtractor.sh script](https://github.com/DL-UB/SubSequencesExtractor)\
--d, --dataset      =       ncbi_dataset.tsv containing all genes in reference genome
+-a, --assembly = draft assembly in FASTA format\
+-q, --query = gene.fna file with gene sequences from reference genome or ranked queries.fasta output of ranked queries [SubSequencesExtractor.sh script](https://github.com/DL-UB/SubSequencesExtractor)\
+-d, --dataset = ncbi_dataset.tsv containing all genes in reference genome
 
 **dScaff** takes as available stategies:\
--gq, --gene_queries   =    perform gene queries strategy\
--rq, --ranked_queries  =   perform ranked queries strategy
+-gq, --gene_queries = perform gene queries strategy\
+-rq, --ranked_queries = perform ranked queries strategy
 
 **dScaff** takes as options:\
--kb, --keep-blast    =     keep BLAST results in directory (may result in large directory sizes)
+-kb, --keep-blast = keep BLAST results in directory (may result in large directory sizes)
 
 
 It is recommended to use the absolute paths for each file. The script will only work if all four arguments are provided. The file names should not contain dots in the name.
